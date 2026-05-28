@@ -159,7 +159,7 @@ task.spawn(function()
                 local hum = char.Humanoid
 
                 hum.WalkSpeed = 32
-
+fix
 if MoveDirection == "RIGHT" then
 
 
