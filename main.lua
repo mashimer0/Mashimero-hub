@@ -129,7 +129,7 @@ AutoButton.Font = Enum.Font.GothamBold
 AutoButton.TextScaled = true
 
 local AutoEnabled = false
-local MoveRight = true
+local MoveDirection = "RIGHT"
 
 AutoButton.MouseButton1Click:Connect(function()
 
@@ -160,7 +160,15 @@ task.spawn(function()
 
                 hum.WalkSpeed = 32
 
-                if MoveRight then
+if MoveDirection == "RIGHT" then
+
+    hum:Move(Vector3.new(1,0,0), true)
+
+else
+
+    hum:Move(Vector3.new(-1,0,0), true)
+
+end
                     hum:Move(Vector3.new(1,0,0), true)
                 else
                     hum:Move(Vector3.new(-1,0,0), true)
@@ -281,6 +289,303 @@ TweenService:Create(
         Enum.EasingDirection.Out
     ),
     {
-        Size = UDim2.new(0,300,0,320)
+Size = UDim2.new(0,320,0,380)
     }
 ):Play()
+local DirectionButton = Instance.new("TextButton")
+DirectionButton.Parent = Main
+DirectionButton.Size = UDim2.new(0,250,0,40)
+DirectionButton.Position = UDim2.new(0.1,0,1.4,0)
+DirectionButton.BackgroundColor3 = Color3.fromRGB(20,20,20)
+
+local DirectionCorner = Instance.new("UICorner")
+DirectionCorner.CornerRadius = UDim.new(1,0)
+DirectionCorner.Parent = DirectionButton
+
+DirectionButton.Text = "RIGHT"
+DirectionButton.TextColor3 = Color3.new(1,1,1)
+DirectionButton.Font = Enum.Font.GothamBold
+DirectionButton.TextScaled = true
+DirectionButton.MouseButton1Click:Connect(function()
+
+    if DirectionButton.Text == "RIGHT" then
+        DirectionButton.Text = "LEFT"
+        MoveRight = false
+    else
+        DirectionButton.Text = "RIGHT"
+        MoveRight = true
+    end
+
+end)
+DirectionButton.MouseButton1Click:Connect(function()
+
+    if MoveDirection == "RIGHT" then
+
+        MoveDirection = "LEFT"
+        DirectionButton.Text = "LEFT"
+
+    else
+
+        MoveDirection = "RIGHT"
+        DirectionButton.Text = "RIGHT"
+
+    end
+end)
+local MinimizeButton = Instance.new("TextButton")
+MinimizeButton.Parent = Main
+MinimizeButton.Size = UDim2.new(0,40,0,40)
+MinimizeButton.Position = UDim2.new(0.83,0,0,5)
+MinimizeButton.BackgroundColor3 = Color3.fromRGB(40,40,40)
+
+local MinimizeCorner = Instance.new("UICorner")
+MinimizeCorner.CornerRadius = UDim.new(1,0)
+MinimizeCorner.Parent = MinimizeButton
+
+MinimizeButton.Text = "-"
+MinimizeButton.TextColor3 = Color3.new(1,1,1)
+MinimizeButton.Font = Enum.Font.GothamBold
+MinimizeButton.TextScaled = true
+
+local Minimized = false
+
+MinimizeButton.MouseButton1Click:Connect(function()
+
+    Minimized = not Minimized
+
+    if Minimized then
+        Main.Size = UDim2.new(0,320,0,50)
+        MinimizeButton.Text = "+"
+    else
+        Main.Size = UDim2.new(0,320,0,460)
+        MinimizeButton.Text = "-"
+    end
+
+end)
+local LaggerButton = Instance.new("TextButton")
+LaggerButton.Parent = Main
+LaggerButton.Size = UDim2.new(0,250,0,45)
+LaggerButton.Position = UDim2.new(0.1,0,1.15,0)
+LaggerButton.BackgroundColor3 = Color3.fromRGB(20,20,20)
+
+local LagCorner = Instance.new("UICorner")
+LagCorner.CornerRadius = UDim.new(1,0)
+LagCorner.Parent = LaggerButton
+
+LaggerButton.Text = "LAGGER OFF"
+LaggerButton.TextColor3 = Color3.new(1,1,1)
+LaggerButton.Font = Enum.Font.GothamBold
+LaggerButton.TextScaled = true
+
+local LagEnabled = false
+
+LaggerButton.MouseButton1Click:Connect(function()
+
+    LagEnabled = not LagEnabled
+
+    if LagEnabled then
+        LaggerButton.Text = "LAGGER ON"
+    else
+        LaggerButton.Text = "LAGGER OFF"
+    end
+
+end)
+
+task.spawn(function()
+
+    while true do
+        task.wait()
+
+        if LagEnabled then
+
+            local remote = game:GetService("ReplicatedStorage"):FindFirstChildOfClass("RemoteEvent")
+
+            if remote then
+                for i = 1,10 do
+                    remote:FireServer()
+                end
+            end
+
+        end
+    end
+end)
+local DesyncButton = Instance.new("TextButton")
+DesyncButton.Parent = Main
+DesyncButton.Size = UDim2.new(0,250,0,45)
+DesyncButton.Position = UDim2.new(0.1,0,1.32,0)
+DesyncButton.BackgroundColor3 = Color3.fromRGB(20,20,20)
+
+local DesyncCorner = Instance.new("UICorner")
+DesyncCorner.CornerRadius = UDim.new(1,0)
+DesyncCorner.Parent = DesyncButton
+
+DesyncButton.Text = "DESYNC OFF"
+DesyncButton.TextColor3 = Color3.new(1,1,1)
+DesyncButton.Font = Enum.Font.GothamBold
+DesyncButton.TextScaled = true
+
+local DesyncEnabled = false
+
+DesyncButton.MouseButton1Click:Connect(function()
+
+    DesyncEnabled = not DesyncEnabled
+
+    if DesyncEnabled then
+        DesyncButton.Text = "DESYNC ON"
+    else
+        DesyncButton.Text = "DESYNC OFF"
+    end
+
+end)
+
+task.spawn(function()
+
+    while true do
+        task.wait(0.03)
+
+        if DesyncEnabled then
+
+            local char = plr.Character
+
+            if char and char:FindFirstChild("HumanoidRootPart") then
+
+                local hrp = char.HumanoidRootPart
+
+                hrp.CFrame =
+                    hrp.CFrame *
+                    CFrame.new(
+                        math.random(-1,1),
+                        0,
+                        math.random(-1,1)
+                    )
+
+            end
+        end
+    end
+end)
+local GrabButton = Instance.new("TextButton")
+GrabButton.Parent = Main
+GrabButton.Size = UDim2.new(0,250,0,45)
+GrabButton.Position = UDim2.new(0.1,0,1.49,0)
+GrabButton.BackgroundColor3 = Color3.fromRGB(20,20,20)
+
+local GrabCorner = Instance.new("UICorner")
+GrabCorner.CornerRadius = UDim.new(1,0)
+GrabCorner.Parent = GrabButton
+
+GrabButton.Text = "AUTO GRAB OFF"
+GrabButton.TextColor3 = Color3.new(1,1,1)
+GrabButton.Font = Enum.Font.GothamBold
+GrabButton.TextScaled = true
+
+local GrabEnabled = false
+local Grabbed = {}
+
+GrabButton.MouseButton1Click:Connect(function()
+
+    GrabEnabled = not GrabEnabled
+
+    if GrabEnabled then
+        GrabButton.Text = "AUTO GRAB ON"
+    else
+        GrabButton.Text = "AUTO GRAB OFF"
+    end
+
+end)
+
+task.spawn(function()
+
+    while true do
+        task.wait(2)
+
+        if GrabEnabled then
+
+            local char = plr.Character
+
+            if char and char:FindFirstChild("HumanoidRootPart") then
+
+                local hrp = char.HumanoidRootPart
+
+                for _,v in pairs(workspace:GetDescendants()) do
+
+                    if v:IsA("Tool")
+                    and v:FindFirstChild("Handle")
+                    and not Grabbed[v] then
+
+                        firetouchinterest(hrp,v.Handle,0)
+                        firetouchinterest(hrp,v.Handle,1)
+
+                        Grabbed[v] = true
+
+                    end
+                end
+            end
+        end
+    end
+end)
+local SmartTPButton = Instance.new("TextButton")
+SmartTPButton.Parent = Main
+SmartTPButton.Size = UDim2.new(0,250,0,45)
+SmartTPButton.Position = UDim2.new(0.1,0,1.66,0)
+SmartTPButton.BackgroundColor3 = Color3.fromRGB(20,20,20)
+
+local SmartTPCorner = Instance.new("UICorner")
+SmartTPCorner.CornerRadius = UDim.new(1,0)
+SmartTPCorner.Parent = SmartTPButton
+
+SmartTPButton.Text = "SMART TP DOWN OFF"
+SmartTPButton.TextColor3 = Color3.new(1,1,1)
+SmartTPButton.Font = Enum.Font.GothamBold
+SmartTPButton.TextScaled = true
+
+local SmartTPEnabled = false
+
+SmartTPButton.MouseButton1Click:Connect(function()
+
+    SmartTPEnabled = not SmartTPEnabled
+
+    if SmartTPEnabled then
+        SmartTPButton.Text = "SMART TP DOWN ON"
+    else
+        SmartTPButton.Text = "SMART TP DOWN OFF"
+    end
+
+end)
+
+task.spawn(function()
+
+    while true do
+        task.wait(0.2)
+
+        if SmartTPEnabled then
+
+            local char = plr.Character
+
+            if char and char:FindFirstChild("HumanoidRootPart") then
+
+                local hrp = char.HumanoidRootPart
+
+                -- 約2.5ジャンプ分
+                if hrp.Position.Y >= 20 then
+
+                    local ray = Ray.new(
+                        hrp.Position,
+                        Vector3.new(0,-1000,0)
+                    )
+
+                    local part,pos = workspace:FindPartOnRay(ray,char)
+
+                    if pos then
+
+                        hrp.CFrame = CFrame.new(
+                            pos.X,
+                            pos.Y + 5,
+                            pos.Z
+                        )
+
+                    end
+                end
+            end
+        end
+    end
+end)
+
