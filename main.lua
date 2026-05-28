@@ -9,7 +9,7 @@ ScreenGui.Parent = game.CoreGui
 -- メインフレーム
 local Main = Instance.new("Frame")
 Main.Parent = ScreenGui
-Main.Size = UDim2.new(0,300,0,220)
+Main.Size = UDim2.new(0,320,0,380)
 Main.Position = UDim2.new(0.05,0,0.3,0)
 Main.BackgroundColor3 = Color3.fromRGB(10,10,10)
 Main.Active = true
@@ -28,3 +28,259 @@ Title.Text = "MASHIMERO HUB"
 Title.TextColor3 = Color3.fromRGB(255,255,255)
 Title.Font = Enum.Font.GothamBold
 Title.TextScaled = true
+local SpeedButton = Instance.new("TextButton")
+SpeedButton.Parent = Main
+SpeedButton.Size = UDim2.new(0,120,0,45)
+SpeedButton.Position = UDim2.new(0.1,0,0.35,0)
+SpeedButton.BackgroundColor3 = Color3.fromRGB(20,20,20)
+
+local SpeedCorner = Instance.new("UICorner")
+SpeedCorner.CornerRadius = UDim.new(0,999)
+SpeedCorner.Parent = SpeedButton
+
+SpeedButton.Text = "Speed OFF"
+SpeedButton.TextColor3 = Color3.new(1,1,1)
+SpeedButton.Font = Enum.Font.GothamBold
+SpeedButton.TextScaled = true
+
+local SpeedEnabled = false
+
+SpeedButton.MouseButton1Click:Connect(function()
+
+    SpeedEnabled = not SpeedEnabled
+
+    local char = plr.Character
+    if char and char:FindFirstChild("Humanoid") then
+
+        if SpeedEnabled then
+            char.Humanoid.WalkSpeed = 32
+            SpeedButton.Text = "Speed ON"
+            SpeedButton.BackgroundColor3 = Color3.fromRGB(120,0,0)
+
+        else
+            char.Humanoid.WalkSpeed = 16
+            SpeedButton.Text = "Speed OFF"
+            SpeedButton.BackgroundColor3 = Color3.fromRGB(20,20,20)
+        end
+    end
+end)
+local TPButton = Instance.new("TextButton")
+TPButton.Parent = Main
+TPButton.Size = UDim2.new(0,120,0,45)
+TPButton.Position = UDim2.new(0.55,0,0.35,0)
+TPButton.BackgroundColor3 = Color3.fromRGB(20,20,20)
+
+local TPCorner = Instance.new("UICorner")
+TPCorner.CornerRadius = UDim.new(1,0)
+TPCorner.Parent = TPButton
+
+TPButton.Text = "TP DOWN OFF"
+TPButton.TextColor3 = Color3.new(1,1,1)
+TPButton.Font = Enum.Font.GothamBold
+TPButton.TextScaled = true
+
+local TPEnabled = false
+
+TPButton.MouseButton1Click:Connect(function()
+
+    TPEnabled = not TPEnabled
+
+    if TPEnabled then
+        TPButton.Text = "TP DOWN ON"
+        TPButton.BackgroundColor3 = Color3.fromRGB(120,0,0)
+
+    else
+        TPButton.Text = "TP DOWN OFF"
+        TPButton.BackgroundColor3 = Color3.fromRGB(20,20,20)
+    end
+end)
+
+task.spawn(function()
+
+    while true do
+        task.wait(0.08)
+
+        if TPEnabled then
+
+            local char = plr.Character
+
+            if char and char:FindFirstChild("HumanoidRootPart") then
+
+                char.HumanoidRootPart.CFrame =
+                    char.HumanoidRootPart.CFrame * CFrame.new(0,-2,0)
+
+            end
+        end
+    end
+end)
+local AutoButton = Instance.new("TextButton")
+AutoButton.Parent = Main
+AutoButton.Size = UDim2.new(0,250,0,45)
+AutoButton.Position = UDim2.new(0.1,0,0.65,0)
+AutoButton.BackgroundColor3 = Color3.fromRGB(20,20,20)
+
+local AutoCorner = Instance.new("UICorner")
+AutoCorner.CornerRadius = UDim.new(1,0)
+AutoCorner.Parent = AutoButton
+
+AutoButton.Text = "AUTO PLAY OFF"
+AutoButton.TextColor3 = Color3.new(1,1,1)
+AutoButton.Font = Enum.Font.GothamBold
+AutoButton.TextScaled = true
+
+local AutoEnabled = false
+local MoveRight = true
+
+AutoButton.MouseButton1Click:Connect(function()
+
+    AutoEnabled = not AutoEnabled
+
+    if AutoEnabled then
+        AutoButton.Text = "AUTO PLAY ON"
+        AutoButton.BackgroundColor3 = Color3.fromRGB(120,0,0)
+
+    else
+        AutoButton.Text = "AUTO PLAY OFF"
+        AutoButton.BackgroundColor3 = Color3.fromRGB(20,20,20)
+    end
+end)
+
+task.spawn(function()
+
+    while true do
+        task.wait(0.15)
+
+        if AutoEnabled then
+
+            local char = plr.Character
+
+            if char and char:FindFirstChild("Humanoid") then
+
+                local hum = char.Humanoid
+
+                hum.WalkSpeed = 32
+
+                if MoveRight then
+                    hum:Move(Vector3.new(1,0,0), true)
+                else
+                    hum:Move(Vector3.new(-1,0,0), true)
+                end
+
+                MoveRight = not MoveRight
+
+            end
+        end
+    end
+end)
+local CurrentMode = "Normal"
+
+local ModeLabel = Instance.new("TextLabel")
+ModeLabel.Parent = Main
+ModeLabel.Size = UDim2.new(0,250,0,30)
+ModeLabel.Position = UDim2.new(0.1,0,0.88,0)
+ModeLabel.BackgroundTransparency = 1
+ModeLabel.Text = "MODE : NORMAL"
+ModeLabel.TextColor3 = Color3.new(1,1,1)
+ModeLabel.Font = Enum.Font.GothamBold
+ModeLabel.TextScaled = true
+
+local ModeButton = Instance.new("TextButton")
+ModeButton.Parent = Main
+ModeButton.Size = UDim2.new(0,250,0,35)
+ModeButton.Position = UDim2.new(0.1,0,1.02,0)
+ModeButton.BackgroundColor3 = Color3.fromRGB(20,20,20)
+
+local ModeCorner = Instance.new("UICorner")
+ModeCorner.CornerRadius = UDim.new(1,0)
+ModeCorner.Parent = ModeButton
+
+ModeButton.Text = "CHANGE MODE"
+ModeButton.TextColor3 = Color3.new(1,1,1)
+ModeButton.Font = Enum.Font.GothamBold
+ModeButton.TextScaled = true
+
+ModeButton.MouseButton1Click:Connect(function()
+
+    if CurrentMode == "Normal" then
+
+        CurrentMode = "Lagger"
+        ModeLabel.Text = "MODE : LAGGER"
+
+    elseif CurrentMode == "Lagger" then
+
+        CurrentMode = "Desync"
+        ModeLabel.Text = "MODE : DESYNC"
+
+    else
+
+        CurrentMode = "Normal"
+        ModeLabel.Text = "MODE : NORMAL"
+
+    end
+end)
+local DropButton = Instance.new("TextButton")
+DropButton.Parent = Main
+DropButton.Size = UDim2.new(0,250,0,40)
+DropButton.Position = UDim2.new(0.1,0,1.22,0)
+DropButton.BackgroundColor3 = Color3.fromRGB(20,20,20)
+
+local DropCorner = Instance.new("UICorner")
+DropCorner.CornerRadius = UDim.new(1,0)
+DropCorner.Parent = DropButton
+
+DropButton.Text = "DROP BRAINROT"
+DropButton.TextColor3 = Color3.new(1,1,1)
+DropButton.Font = Enum.Font.GothamBold
+DropButton.TextScaled = true
+
+DropButton.MouseButton1Click:Connect(function()
+
+    local char = plr.Character
+
+    if char then
+
+        for i,v in pairs(char:GetChildren()) do
+
+            if v:IsA("Tool") then
+
+                v.Parent = workspace
+
+            end
+        end
+    end
+end)
+local CloseButton = Instance.new("TextButton")
+CloseButton.Parent = Main
+CloseButton.Size = UDim2.new(0,35,0,35)
+CloseButton.Position = UDim2.new(1,-40,0,5)
+CloseButton.BackgroundColor3 = Color3.fromRGB(120,0,0)
+
+local CloseCorner = Instance.new("UICorner")
+CloseCorner.CornerRadius = UDim.new(1,0)
+CloseCorner.Parent = CloseButton
+
+CloseButton.Text = "X"
+CloseButton.TextColor3 = Color3.new(1,1,1)
+CloseButton.Font = Enum.Font.GothamBold
+CloseButton.TextScaled = true
+
+CloseButton.MouseButton1Click:Connect(function()
+
+    ScreenGui:Destroy()
+
+end)
+local TweenService = game:GetService("TweenService")
+
+Main.Size = UDim2.new(0,0,0,0)
+
+TweenService:Create(
+    Main,
+    TweenInfo.new(
+        0.4,
+        Enum.EasingStyle.Back,
+        Enum.EasingDirection.Out
+    ),
+    {
+        Size = UDim2.new(0,300,0,320)
+    }
+):Play()
