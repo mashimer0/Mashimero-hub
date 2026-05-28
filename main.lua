@@ -582,4 +582,29 @@ task.spawn(function()
         end
     end
 end)
+local InfiniteJumpEnabled = true
 
+game:GetService("UserInputService").JumpRequest:Connect(function()
+    if InfiniteJumpEnabled then
+        local char = plr.Character
+        if char and char:FindFirstChildOfClass("Humanoid") then
+            char:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Jumping)
+        end
+    end
+end)
+local CircleButton = Instance.new("TextButton")
+CircleButton.Parent = ScreenGui
+
+CircleButton.Size = UDim2.new(0,90,0,90)
+CircleButton.Position = UDim2.new(0.72,0,0.1,0)
+
+CircleButton.BackgroundColor3 = Color3.fromRGB(170,0,0)
+CircleButton.Text = "Desync"
+
+CircleButton.TextColor3 = Color3.new(1,1,1)
+CircleButton.Font = Enum.Font.GothamBold
+CircleButton.TextSize = 18
+
+local CircleCorner = Instance.new("UICorner")
+CircleCorner.CornerRadius = UDim.new(1,0)
+CircleCorner.Parent = CircleButton
