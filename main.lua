@@ -162,13 +162,7 @@ task.spawn(function()
 
 if MoveDirection == "RIGHT" then
 
-    hum:Move(Vector3.new(1,0,0), true)
 
-else
-
-    hum:Move(Vector3.new(-1,0,0), true)
-
-end
                     hum:Move(Vector3.new(1,0,0), true)
                 else
                     hum:Move(Vector3.new(-1,0,0), true)
