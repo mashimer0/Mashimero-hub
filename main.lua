@@ -350,15 +350,15 @@ MinimizeButton.MouseButton1Click:Connect(function()
         Main.Size = UDim2.new(0,320,0,50)
         MinimizeButton.Text = "+"
     else
-        Main.Size = UDim2.new(0,320,0,460)
+Main.Size = UDim2.new(0,360,0,650)
         MinimizeButton.Text = "-"
     end
 
 end)
 local LaggerButton = Instance.new("TextButton")
 LaggerButton.Parent = Main
-LaggerButton.Size = UDim2.new(0,250,0,45)
-LaggerButton.Position = UDim2.new(0.1,0,1.15,0)
+LaggerButton.Size = UDim2.new(0,280,0,55)
+LaggerButton.Position = UDim2.new(0.1,0,1.28,0)
 LaggerButton.BackgroundColor3 = Color3.fromRGB(20,20,20)
 
 local LagCorner = Instance.new("UICorner")
