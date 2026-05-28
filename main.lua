@@ -558,8 +558,8 @@ task.spawn(function()
 
                 local hrp = char.HumanoidRootPart
 
-                -- 約2.5ジャンプ分
-                if hrp.Position.Y >= 20 then
+
+　　　　　　　　　　　　if hrp.Position.Y >= 35 then
 
                     local ray = Ray.new(
                         hrp.Position,
